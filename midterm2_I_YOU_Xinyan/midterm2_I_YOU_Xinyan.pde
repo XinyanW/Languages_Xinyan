@@ -8,6 +8,7 @@ String state;
 
 int t, t2;
 int counter=0;
+boolean textisPlaying= true;
 
 int[]evennumber= {0, 2, 4, 6};
 int en=int(random(4));
@@ -15,10 +16,11 @@ int nn= evennumber[en];
 
 int[]noevennumber={1, 3, 5, 7};
 int nen=int(random(4));
-int n= noevennumber[nen];
+int nnn= noevennumber[nen];
 
-int nnn= int(random(8));
-String[] ttext= new String[9];
+
+int n= int(random(8));
+String[] ttext= new String[8];
 
 int maxImages = 8; 
 int imageIndex = 0; 
@@ -32,7 +34,7 @@ void setup() {
   //background(#f7f7ef);
   size(1400, 830);
   smooth();
-  frameRate(2);
+  frameRate(3);
   textfont(60, 20);
   minim = new Minim(this);
   player = minim.loadFile("iceland.mp3");
@@ -54,13 +56,13 @@ void setup() {
   ttext[5] ="I wait for you,";
   ttext[6] ="I lost you,";
   ttext[7] ="I want you,";
-  ttext[8]="";
+  //ttext[8]="";
 }
 void draw() {
   background(#f7f7ef);
   image(bg[bgcounter], 0,0);
   image(images[imageIndex], 550, 285, 300, 300);
-  delay(300);
+  //delay(1500);
   storytext();
   if (isPlaying == true) {
     imageIndex = (imageIndex + 1) % images.length;
@@ -68,9 +70,11 @@ void draw() {
   if(bgisPlaying==true){
     bgcounter = (bgcounter + 1) % bg.length;
   }
+  
   println("hand:  "+ imageIndex);
   println("mouseclick:  "+counter);
-
+  println("n:  "+n,"nn:  "+nn,"nnn:  "+nnn);
+if(textisPlaying==true){
   if (counter==1) {
     fill(#8f8faa);
     text(ttext[n], 80, 380);
@@ -110,21 +114,31 @@ void draw() {
     text(ttext[t2], 920, 477);
     isPlaying = true;
   } else if (counter==6) {
-    counter=0;
-    text(ttext[8], 80, 380);
-    text(ttext[8], 920, 380);
-    text(ttext[8], 80, 477);
-    text(ttext[8], 920, 477);
-    text(ttext[8], 80, 574);
-    text(ttext[8], 920, 574);
+    text("", 80, 380);
+    text("", 920, 380);
+    text("", 80, 477);
+    text("", 920, 477);
+    text("", 80, 574);
+    text("", 920, 574);
     isPlaying = true;
+    textisPlaying=false;
+   
+  }
+}
+  else if (textisPlaying==false) {
+   counter=0;
+   textisPlaying=true;
+   isPlaying = true;
+   n=int(random(8));
+   nn=int(random(8));
+   nnn=int(random(8));
   }
 }
 
 
 
 void mouseClicked() {
-  if (mouseButton==LEFT&&counter<=6&&mouseX>553&&mouseX<953&&mouseY<685&&mouseY>285) {
+  if (mouseButton==LEFT) {
     counter++;
   }
 }
@@ -141,7 +155,7 @@ void storytext() {
   text("I         YOU", 600, 80);
   textFont(f, 20);
   fill(#8f8faa);
-  text("Click the pictures and choose your favourtie gesture to fill in the two stories of two different endings. ", 250, 150);
+  text("Left click to choose the gesture randomly, then fill in the two stories of two different endings. ", 250, 150);
   text("Compare two different endings and image the plots of the stories.", 400, 180);
   line(631, 81, 702, 81);
   // first story
